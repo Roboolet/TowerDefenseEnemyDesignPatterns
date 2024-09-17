@@ -4,15 +4,8 @@ using UnityEngine;
 
 public class EnemySpawnpoint : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    public void AddToQueue(EnemyInfo _enemy)
     {
-        
-    }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }

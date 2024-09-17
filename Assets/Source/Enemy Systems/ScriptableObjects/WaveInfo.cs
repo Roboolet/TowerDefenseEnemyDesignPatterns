@@ -2,17 +2,22 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class WaveInfo : MonoBehaviour
+[CreateAssetMenu(menuName = "Enemies")]
+public class WaveInfo : ScriptableObject
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    public WaveInfoElement[] waveElements;
+}
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+public struct WaveInfoElement
+{
+    public string enemyTypeName;
+    public int spawnAmount;
+    public WaveSpawnpointPreference spawnpointPreference;
+}
+
+public enum WaveSpawnpointPreference
+{
+    RANDOM,
+    RANDOM_SEQUENTIAL,
+    ROUND_ROBIN,
 }
