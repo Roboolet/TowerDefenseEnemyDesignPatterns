@@ -4,15 +4,14 @@ using UnityEngine;
 
 public class EnemyWaveSystem : MonoBehaviour
 {
-    public ObjectPool enemyPool;
-
+    [SerializeField] float nextWaveDelay;
     [SerializeField] WaveInfo[] _waves;
     [SerializeField] EnemySpawnpoint[] spawners;
     [SerializeField] EnemyInfo[] _enemyTypes;
 
     private Dictionary<string, EnemyInfo> enemyTypes = new Dictionary<string, EnemyInfo>();
     private Dictionary<int, WaveInfo> waves = new Dictionary<int, WaveInfo>();
-    private int currentWave;
+    private int currentWave = 0;
     private WaveInfo currentWaveInfo;
 
     private void Awake()
@@ -21,6 +20,18 @@ public class EnemyWaveSystem : MonoBehaviour
         {
             enemyTypes.Add(info.name, info);
         }
+
+        foreach (WaveInfo info in _waves)
+        {
+            waves.Add(info.waveId, info);
+        }
+    }
+
+    IEnumerator WaveStartingLoop()
+    {
+        // instead of using WaitForSeconds and using regular scaled time, there should be a seperate "game-time" variable used by enemies and towers
+        yield return new WaitForSecondsRealtime(nextWaveDelay);
+        StartWave(currentWave + 1);
     }
 
     public void StartWave(int _waveNumber)
@@ -75,6 +86,8 @@ public class EnemyWaveSystem : MonoBehaviour
                     break;                
             }
         }
+
+        StartCoroutine(WaveStartingLoop());
     }
 
     EnemySpawnpoint GetRandomSpawnpoint()
@@ -87,4 +100,5 @@ public class EnemyWaveSystem : MonoBehaviour
         return new WaveInfo();
     }
 
+    
 }

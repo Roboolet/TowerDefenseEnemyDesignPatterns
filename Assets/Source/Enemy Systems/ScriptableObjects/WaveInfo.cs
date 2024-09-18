@@ -5,6 +5,7 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Enemies")]
 public class WaveInfo : ScriptableObject
 {
+    public int waveId;
     public WaveInfoElement[] waveElements;
 }
 
