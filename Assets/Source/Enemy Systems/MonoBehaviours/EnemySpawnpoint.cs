@@ -4,16 +4,16 @@ using UnityEngine;
 
 public class EnemySpawnpoint : MonoBehaviour
 {
-    static ObjectPool<Enemy> enemyPool;
+    private static ObjectPool<Enemy> enemyPool;
 
     [SerializeField] float spawnsPerSecond = 2;
 
-    Queue<EnemyInfo> spawnQueue = new Queue<EnemyInfo>();
-    float lastSpawnTimestamp;
+    private Queue<EnemyInfo> spawnQueue = new Queue<EnemyInfo>();
+    private float lastSpawnTimestamp;
 
     // this is loaded from the root\Resources folder
-    const string enemyPrefabPath = "EnemyInstance";
-    GameObject enemyPrefab;
+    private const string enemyPrefabPath = "EnemyInstance";
+    private GameObject enemyPrefab;
 
     private void Awake()
     {
@@ -42,7 +42,7 @@ public class EnemySpawnpoint : MonoBehaviour
         spawnQueue.Enqueue(_enemyInfo);
     }
 
-    Enemy SpawnEnemy(EnemyInfo _enemyInfo)
+    private Enemy SpawnEnemy(EnemyInfo _enemyInfo)
     {
         Enemy newEnemy;
         if (enemyPool.TryActivateObject(out Enemy _newEnemy))
@@ -57,9 +57,7 @@ public class EnemySpawnpoint : MonoBehaviour
             enemyPool.AddObjectToPool(newEnemy);
         }
 
-        // TODO:
-        // set enemy stats
-        // add correct enemy decorators
+        newEnemy.Initialize(_enemyInfo);
 
         return newEnemy;
     }

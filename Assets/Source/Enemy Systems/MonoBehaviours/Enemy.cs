@@ -4,15 +4,36 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour, IPooledObject
 {
-    // Start is called before the first frame update
-    void Start()
+    public bool IsInUse { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
+
+    private void Update()
     {
         
     }
 
-    // Update is called once per frame
-    void Update()
+    public void Initialize(EnemyInfo _info)
     {
-        
+        Activate();
+    }
+
+    public void Activate()
+    {
+        IsInUse = true;
+    }
+
+    public void Deactivate()
+    {
+        IsInUse = false;
+        ResetDecorators();
+    }
+
+    private void ResetDecorators()
+    {
+
+    }
+
+    private void AddDecorator<T>() where T : IEnemyDecorator
+    {
+
     }
 }

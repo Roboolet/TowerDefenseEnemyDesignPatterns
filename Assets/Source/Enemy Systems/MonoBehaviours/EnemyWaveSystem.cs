@@ -27,7 +27,7 @@ public class EnemyWaveSystem : MonoBehaviour
         }
     }
 
-    IEnumerator WaveStartingLoop()
+    private IEnumerator WaveStartingLoop()
     {
         // instead of using WaitForSeconds and using regular scaled time, there should be a seperate "game-time" variable used by enemies and towers
         yield return new WaitForSecondsRealtime(nextWaveDelay);
@@ -90,12 +90,12 @@ public class EnemyWaveSystem : MonoBehaviour
         StartCoroutine(WaveStartingLoop());
     }
 
-    EnemySpawnpoint GetRandomSpawnpoint()
+    private EnemySpawnpoint GetRandomSpawnpoint()
     {
         return spawners[Random.Range(0, spawners.Length)];
     }
 
-    WaveInfo GenerateUniqueWaveInfo(int _waveNumber)
+    private WaveInfo GenerateUniqueWaveInfo(int _waveNumber)
     {
         return new WaveInfo();
     }
