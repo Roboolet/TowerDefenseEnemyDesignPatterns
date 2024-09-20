@@ -5,14 +5,8 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Enemies/EnemyInfo")]
 public class EnemyInfo : ScriptableObject
 {
-    public EnemyInfoElement[] components;
+    public EnemyInfoComponentSelector[] components;
     public ScratchPadInitData[] initData;
-}
-
-[System.Serializable]
-public struct EnemyInfoElement
-{
-    public EnemyInfoComponentSelector type;
 }
 
 public enum EnemyInfoComponentSelector

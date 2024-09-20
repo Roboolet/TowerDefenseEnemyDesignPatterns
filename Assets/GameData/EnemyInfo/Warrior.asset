@@ -12,8 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 287d16c7195fed74aa9a792821935554, type: 3}
   m_Name: Warrior
   m_EditorClassIdentifier: 
-  decorators:
-  - type: 0
+  components: 00000000
   initData:
   - key: towerWeight
     value: 1

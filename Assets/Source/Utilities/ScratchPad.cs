@@ -4,12 +4,12 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using UnityEngine;
 
-public class ScratchPad<T>
+public class ScratchPad<O>
 {
-    public T Owner { get; private set; }
+    public O Owner { get; private set; }
     private Dictionary<string, string> data = new Dictionary<string, string>();
 
-    public ScratchPad(T _owner, ScratchPadInitData[] _initData)
+    public ScratchPad(O _owner, ScratchPadInitData[] _initData)
     {
         Owner = _owner; 
         for (int i = 0; i < _initData.Length; i++)

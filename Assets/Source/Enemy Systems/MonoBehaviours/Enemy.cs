@@ -33,7 +33,7 @@ public class Enemy : MonoBehaviour, IPooledObject, IHealthHaver, IDamageable
         for(int i = 0; i < _info.components.Length; i++)
         {
             // dynamically create component instance from a an enum with the name of the type
-            Type decoType = Type.GetType(_info.components[i].type.ToString()+"Component");
+            Type decoType = Type.GetType(_info.components[i].ToString()+"Component");
             IEnemyComponent obj = (IEnemyComponent)Activator.CreateInstance(decoType);
             AddDecorator(obj);
         }
