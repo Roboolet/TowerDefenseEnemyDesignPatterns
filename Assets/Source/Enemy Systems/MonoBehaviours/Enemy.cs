@@ -33,7 +33,7 @@ public class Enemy : MonoBehaviour, IPooledObject, IHealthHaver, IDamageable
         for(int i = 0; i < _info.decorators.Length; i++)
         {
             // dynamically create decorator instance from a an enum with the name of the type
-            Type decoType = Type.ReflectionOnlyGetType(_info.decorators[i].type.ToString()+"Decorator", true, false);
+            Type decoType = Type.GetType(_info.decorators[i].type.ToString()+"Decorator");
             IEnemyDecorator obj = (IEnemyDecorator)Activator.CreateInstance(decoType);
             AddDecorator(obj);
         }

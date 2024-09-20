@@ -17,8 +17,6 @@ public struct EnemyInfoElement
 
 public enum EnemyInfoComponentSelector
 {
-    TowerTargeter,
-    TowerAvoider,
     CastleTargeter
 }
 
