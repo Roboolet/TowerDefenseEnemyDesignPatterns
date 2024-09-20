@@ -4,21 +4,15 @@ using UnityEngine;
 
 public class ObjectPool<T> where T : IPooledObject
 {
-    private Queue<T> activatedObjects = new Queue<T>();
+    private List<T> activatedObjects = new List<T>();
     private Queue<T> sleepingObjects = new Queue<T>();
 
-    public bool TryActivateObject(out T _obj, bool allowActivatedObjects = false)
+    public bool TryActivateObject(out T _obj)
     {
+        CleanActivePool();
         if (sleepingObjects.TryDequeue(out T _sleepingDq))
         {
             _obj = _sleepingDq;
-            _obj.Activate();
-            return true;
-        }
-        else if (allowActivatedObjects && activatedObjects.TryDequeue(out T _activatedDq))
-        {
-            _obj = _activatedDq;
-            _obj.Deactivate();
             _obj.Activate();
             return true;
         }
@@ -30,14 +24,21 @@ public class ObjectPool<T> where T : IPooledObject
 
     public void AddObjectToPool(T _obj)
     {
+        if (_obj.IsInUse) { activatedObjects.Add(_obj); }
+        else { sleepingObjects.Enqueue(_obj); }
     }
 
-    public void CleanPool(bool alsoCleanActiveObjects)
+    public void CleanActivePool()
     {
-        sleepingObjects.Clear();
-        if(alsoCleanActiveObjects)
+        for (int i = activatedObjects.Count - 1; i >= 0; i--)
         {
-            activatedObjects.Clear();
+            if (!activatedObjects[i].IsInUse)
+            {
+                T unusedObj = activatedObjects[i];
+                sleepingObjects.Enqueue(unusedObj);
+                unusedObj.Deactivate();
+                activatedObjects.RemoveAt(i);
+            }
         }
     }
 }
