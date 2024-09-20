@@ -4,10 +4,19 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using UnityEngine;
 
-public class ScratchPad
+public class ScratchPad<T>
 {
+    public T Owner { get; private set; }
     private Dictionary<string, string> data = new Dictionary<string, string>();
-    private bool isInitialized = false;
+
+    public ScratchPad(T _owner, ScratchPadInitData[] _initData)
+    {
+        Owner = _owner; 
+        for (int i = 0; i < _initData.Length; i++)
+        {
+            Set(_initData[i].key, _initData[i].value);
+        }
+    }
 
     public void Set(string key, string value)
     {
@@ -48,6 +57,11 @@ public class ScratchPad
             Debug.LogError("Scratchpad does not contain entry for key: " + key);
             return "";
         }
+    }
+
+    public void Clear()
+    {
+        data.Clear();
     }
 
     void Initialize()

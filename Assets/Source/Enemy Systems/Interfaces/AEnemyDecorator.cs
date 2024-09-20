@@ -4,15 +4,15 @@ using UnityEngine;
 
 public abstract class AEnemyDecorator : IEnemyDecorator
 {
-    public virtual void OnSpawn(ScratchPad _scratchPad)
+    public virtual void OnSpawn(ScratchPad<Enemy> _scratchPad)
     {
     }
-    public virtual void OnUpdate(ScratchPad _scratchPad)
+    public virtual void OnUpdate(ScratchPad<Enemy> _scratchPad)
     {
 
     }
 
-    public virtual void OnDeath(ScratchPad _scratchPad)
+    public virtual void OnDeath(ScratchPad<Enemy> _scratchPad)
     {
 
     }

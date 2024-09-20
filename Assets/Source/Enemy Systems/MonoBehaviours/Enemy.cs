@@ -10,7 +10,7 @@ public class Enemy : MonoBehaviour, IPooledObject
     public Dictionary<Transform, float> weightedTargets = new Dictionary<Transform, float>();
 
     private List<IEnemyDecorator> decorators;
-    private ScratchPad scratchPad;
+    private ScratchPad<Enemy> scratchPad;
 
     private void Update()
     {
@@ -33,16 +33,11 @@ public class Enemy : MonoBehaviour, IPooledObject
             // dynamically create decorator instance from a an enum with the name of the type
             Type decoType = Type.ReflectionOnlyGetType(_info.decorators[i].type.ToString()+"Decorator", true, false);
             IEnemyDecorator obj = (IEnemyDecorator)Activator.CreateInstance(decoType);
-            decorators.Add(obj);
+            AddDecorator(obj);
         }
 
         // create scratchpad
-        scratchPad = new ScratchPad();
-        for(int i = 0; i < _info.initData.Length; i++)
-        {
-            ScratchPadInitData iota = _info.initData[i];
-            scratchPad.Set(iota.key, iota.value);
-        }
+        scratchPad = new ScratchPad<Enemy>(this, _info.initData);        
 
         // call OnSpawn on all decorators
         for (int i = 0; i < decorators.Count; i++)
@@ -64,11 +59,13 @@ public class Enemy : MonoBehaviour, IPooledObject
 
     private void ResetDecorators()
     {
-
+        decorators.Clear();
+        scratchPad.Clear();
+        weightedTargets.Clear();
     }
 
-    private void AddDecorator<T>() where T : IEnemyDecorator
+    private void AddDecorator<T>(T obj) where T : IEnemyDecorator
     {
-
+        decorators.Add(obj);
     }
 }
