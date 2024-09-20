@@ -334,9 +334,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 321ce559b11e36842b314f27306b7c75, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  nextWaveDelay: 5
+  nextWaveDelay: 10
   _waves:
   - {fileID: 11400000, guid: 5e4a49849cc3b484b9126032da1165bf, type: 2}
+  - {fileID: 11400000, guid: 9689a5242e707674a8f6e5f7e20fc9c1, type: 2}
   spawners:
   - {fileID: 688600110}
   - {fileID: 136644164}
