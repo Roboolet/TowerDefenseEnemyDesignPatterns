@@ -11,7 +11,7 @@ public class Enemy : MonoBehaviour, IPooledObject, IHealthHaver, IDamageable
 
     public Dictionary<Transform, float> weightedTargets = new Dictionary<Transform, float>();
 
-    private List<IEnemyDecorator> decorators;
+    private List<IEnemyDecorator> decorators = new List<IEnemyDecorator>();
     private ScratchPad<Enemy> scratchPad;
 
     private void Update()

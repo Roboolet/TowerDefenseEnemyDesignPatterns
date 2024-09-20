@@ -4,13 +4,14 @@ using UnityEngine;
 
 public class EnemySpawnpoint : MonoBehaviour
 {
-    private static ObjectPool<Enemy> enemyPool;
+    public bool IsSpawnerEmpty => spawnQueue.Count == 0;
 
     [SerializeField] float spawnsPerSecond = 2;
 
+    private static ObjectPool<Enemy> enemyPool;
+
     private Queue<EnemyInfo> spawnQueue = new Queue<EnemyInfo>();
     private float lastSpawnTimestamp;
-
     // this is loaded from the root\Resources folder
     private const string enemyPrefabPath = "EnemyInstance";
     private GameObject enemyPrefab;

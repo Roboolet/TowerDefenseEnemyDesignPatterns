@@ -25,12 +25,19 @@ public class EnemyWaveSystem : MonoBehaviour
         {
             waves.Add(info.waveId, info);
         }
+
+        // starting immediately for debugging purposes
+        StartWave(1);
     }
 
     private IEnumerator WaveStartingLoop()
     {
         // instead of using WaitForSeconds and using regular scaled time, there should be a seperate "game-time" variable used by enemies and towers
         yield return new WaitForSecondsRealtime(nextWaveDelay);
+        while (!AreAllSpawnpointsEmpty())
+        {
+            yield return new WaitForSecondsRealtime(0.5f);
+        }
         StartWave(currentWave + 1);
     }
 
@@ -47,8 +54,11 @@ public class EnemyWaveSystem : MonoBehaviour
         else
         {
             Debug.LogWarning("No WaveInfo found with index " + _waveNumber + ". Generating new WaveInfo");
-            currentWaveInfo = GenerateUniqueWaveInfo(_waveNumber);
+            /*currentWaveInfo = GenerateUniqueWaveInfo(_waveNumber);*/
+            currentWaveInfo = null;
         }
+
+        if (currentWaveInfo == null) { return; }
 
         // enqueue enemies to spawn points
         foreach(WaveInfoElement elem in currentWaveInfo.waveElements)
@@ -64,14 +74,14 @@ public class EnemyWaveSystem : MonoBehaviour
             {
                 default:
                 case WaveSpawnpointPreference.ROUND_ROBIN:
-                    for (int i = 0; i < elem.spawnAmount; i++)
+                    for (int i = 0; i <= elem.spawnAmount; i++)
                     {
                         spawners[i % spawners.Length].AddToQueue(elemInfo);
                     }
                     break;
 
                 case WaveSpawnpointPreference.RANDOM:
-                    for (int i = 0; i < elem.spawnAmount; i++)
+                    for (int i = 0; i <= elem.spawnAmount; i++)
                     {
                         GetRandomSpawnpoint().AddToQueue(elemInfo);
                     }
@@ -79,7 +89,7 @@ public class EnemyWaveSystem : MonoBehaviour
 
                 case WaveSpawnpointPreference.RANDOM_SEQUENTIAL:
                     EnemySpawnpoint randomSpawn = GetRandomSpawnpoint();
-                    for(int i = 0; i < elem.spawnAmount; i++)
+                    for(int i = 0; i <= elem.spawnAmount; i++)
                     {
                         randomSpawn.AddToQueue(elemInfo);
                     }
@@ -90,15 +100,27 @@ public class EnemyWaveSystem : MonoBehaviour
         StartCoroutine(WaveStartingLoop());
     }
 
+    private bool AreAllSpawnpointsEmpty()
+    {
+        bool value = true;
+
+        for(int i = 0; i < spawners.Length; i++)
+        {
+            if (!spawners[i].IsSpawnerEmpty) value = false;
+        }
+
+        return value;
+    }
+
     private EnemySpawnpoint GetRandomSpawnpoint()
     {
         return spawners[Random.Range(0, spawners.Length)];
     }
 
-    private WaveInfo GenerateUniqueWaveInfo(int _waveNumber)
+    /*private WaveInfo GenerateUniqueWaveInfo(int _waveNumber)
     {
         return new WaveInfo();
-    }
+    }*/
 
     
 }

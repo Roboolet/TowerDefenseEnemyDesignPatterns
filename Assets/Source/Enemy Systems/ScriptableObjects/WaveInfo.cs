@@ -9,6 +9,7 @@ public class WaveInfo : ScriptableObject
     public WaveInfoElement[] waveElements;
 }
 
+[System.Serializable]
 public struct WaveInfoElement
 {
     public string enemyTypeName;
