@@ -17,6 +17,7 @@ public struct EnemyInfoElement
 
 public enum EnemyInfoComponentSelector
 {
+    // names must exactly match their corresponding class, but with the "-Decorator" suffix removed
     CastleTargeter
 }
 
