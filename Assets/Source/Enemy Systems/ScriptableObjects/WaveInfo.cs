@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "Enemies")]
+[CreateAssetMenu(menuName = "Enemies/WaveInfo")]
 public class WaveInfo : ScriptableObject
 {
     public int waveId;

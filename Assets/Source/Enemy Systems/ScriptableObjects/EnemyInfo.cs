@@ -2,17 +2,24 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyInfo : MonoBehaviour
+[CreateAssetMenu(menuName = "Enemies/EnemyInfo")]
+public class EnemyInfo : ScriptableObject
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    public EnemyInfoElement[] decorators;
+    public ScratchPadInitData[] initData;
 }
+
+[System.Serializable]
+public struct EnemyInfoElement
+{
+    public EnemyInfoComponentSelector type;
+}
+
+public enum EnemyInfoComponentSelector
+{
+    TowerTargeter,
+    TowerAvoider,
+    CastleTargeter
+}
+
+

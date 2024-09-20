@@ -4,7 +4,7 @@ using UnityEngine;
 
 public interface IEnemyDecorator
 {
-    public void OnSpawn(Enemy _owner);
-    public void OnUpdate();
-    public void OnDeath();
+    public void OnSpawn(ScratchPad _scratchPad);
+    public void OnUpdate(ScratchPad _scratchPad);
+    public void OnDeath(ScratchPad _scratchPad);
 }

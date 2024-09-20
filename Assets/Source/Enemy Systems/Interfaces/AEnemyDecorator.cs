@@ -4,18 +4,15 @@ using UnityEngine;
 
 public abstract class AEnemyDecorator : IEnemyDecorator
 {
-    protected Enemy Owner {  get; private set; }
-
-    public virtual void OnSpawn(Enemy _owner)
+    public virtual void OnSpawn(ScratchPad _scratchPad)
     {
-        Owner = _owner;
     }
-    public virtual void OnUpdate()
+    public virtual void OnUpdate(ScratchPad _scratchPad)
     {
 
     }
 
-    public virtual void OnDeath()
+    public virtual void OnDeath(ScratchPad _scratchPad)
     {
 
     }
