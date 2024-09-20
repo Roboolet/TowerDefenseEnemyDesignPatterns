@@ -11,15 +11,15 @@ public class Enemy : MonoBehaviour, IPooledObject, IHealthHaver, IDamageable
 
     public Dictionary<Transform, float> weightedTargets = new Dictionary<Transform, float>();
 
-    private List<IEnemyDecorator> decorators = new List<IEnemyDecorator>();
+    private List<IEnemyComponent> components = new List<IEnemyComponent>();
     private ScratchPad<Enemy> scratchPad;
 
     private void Update()
     {
-        // call OnUpdate on all decorators
-        for (int i = 0; i < decorators.Count; i++)
+        // call OnUpdate on all components
+        for (int i = 0; i < components.Count; i++)
         {
-            decorators[i].OnUpdate(scratchPad);
+            components[i].OnUpdate(scratchPad);
         }
 
         // do things
@@ -29,22 +29,22 @@ public class Enemy : MonoBehaviour, IPooledObject, IHealthHaver, IDamageable
     {
         Activate();
 
-        // create all decorators
-        for(int i = 0; i < _info.decorators.Length; i++)
+        // create all components
+        for(int i = 0; i < _info.components.Length; i++)
         {
-            // dynamically create decorator instance from a an enum with the name of the type
-            Type decoType = Type.GetType(_info.decorators[i].type.ToString()+"Decorator");
-            IEnemyDecorator obj = (IEnemyDecorator)Activator.CreateInstance(decoType);
+            // dynamically create component instance from a an enum with the name of the type
+            Type decoType = Type.GetType(_info.components[i].type.ToString()+"Component");
+            IEnemyComponent obj = (IEnemyComponent)Activator.CreateInstance(decoType);
             AddDecorator(obj);
         }
 
         // create scratchpad
         scratchPad = new ScratchPad<Enemy>(this, _info.initData);        
 
-        // call OnSpawn on all decorators
-        for (int i = 0; i < decorators.Count; i++)
+        // call OnSpawn on all components
+        for (int i = 0; i < components.Count; i++)
         {
-            decorators[i].OnSpawn(scratchPad);
+            components[i].OnSpawn(scratchPad);
         }
     }
 
@@ -61,14 +61,14 @@ public class Enemy : MonoBehaviour, IPooledObject, IHealthHaver, IDamageable
 
     private void ResetDecorators()
     {
-        decorators.Clear();
+        components.Clear();
         scratchPad.Clear();
         weightedTargets.Clear();
     }
 
-    private void AddDecorator<T>(T obj) where T : IEnemyDecorator
+    private void AddDecorator<T>(T obj) where T : IEnemyComponent
     {
-        decorators.Add(obj);
+        components.Add(obj);
     }
 
     public void TakeDamage(float _damage)
