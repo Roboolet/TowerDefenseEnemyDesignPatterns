@@ -3,9 +3,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Enemy : MonoBehaviour, IPooledObject
+public class Enemy : MonoBehaviour, IPooledObject, IHealthHaver, IDamageable
 {
     public bool IsInUse { get; set; }
+    public float Health { get; set; }
+    public event Action OnHealthChanged;
 
     public Dictionary<Transform, float> weightedTargets = new Dictionary<Transform, float>();
 
@@ -67,5 +69,11 @@ public class Enemy : MonoBehaviour, IPooledObject
     private void AddDecorator<T>(T obj) where T : IEnemyDecorator
     {
         decorators.Add(obj);
+    }
+
+    public void TakeDamage(float _damage)
+    {
+        Health -= _damage;
+        OnHealthChanged?.Invoke();
     }
 }

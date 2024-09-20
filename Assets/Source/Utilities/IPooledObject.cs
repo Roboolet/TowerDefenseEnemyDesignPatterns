@@ -7,7 +7,7 @@ public interface IPooledObject
     public bool IsInUse { get; set; }
 
     /// <summary>
-    /// Called when this IPooledObject is being requested by the ObjectPool
+    /// Called when this IPooledObject is being requested from the ObjectPool
     /// </summary>
     public void Activate();
 

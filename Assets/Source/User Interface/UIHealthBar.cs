@@ -4,15 +4,17 @@ using UnityEngine;
 
 public class UIHealthBar : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    // i'm currently leaving this out of scope for testing
+
+    public IHealthHaver owner;
+
+    public void Start()
     {
-        
+        owner.OnHealthChanged += OnHealthChanged;
     }
 
-    // Update is called once per frame
-    void Update()
+    void OnHealthChanged()
     {
-        
+        // get owner health and change health bar/numbers/whatever
     }
 }
